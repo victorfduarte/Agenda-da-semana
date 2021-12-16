@@ -6,12 +6,18 @@ class Agenda:
 
     def getDia(self, dia: int):
         return self.dias[dia]
+    
+    def getDias(self):
+        return self.dias
 
 
 class Dia:
     def __init__(self, nome: str):
         self.nome = nome
         self.tarefas = []
+
+    def __repr__(self):
+        return self.nome
     
     def getTarefas(self):
         return self.tarefas
