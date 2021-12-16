@@ -19,6 +19,9 @@ class Dia:
     def __repr__(self):
         return self.nome
     
+    def getNome(self):
+        return self.nome
+    
     def getTarefas(self):
         return self.tarefas
     
