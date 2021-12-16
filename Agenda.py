@@ -11,3 +11,13 @@ class Agenda:
 class Dia:
     def __init__(self, nome):
         self.nome = nome
+        self.tarefas = []
+    
+    def getTarefas(self):
+        return self.tarefas
+    
+    def addTarefa(self, nome):
+        self.tarefas.append(nome)
+    
+    def removeTarefa(self, index):
+        self.tarefa.pop(index)
