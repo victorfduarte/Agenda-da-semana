@@ -7,7 +7,7 @@ agenda = Agenda.Agenda()
 agenda.getDia(0).addTarefa('Acordar cedo')
 
 def main():
-    menu_itens = ['Ver dias da semana', 'Editar dia', 'Sair']
+    menu_itens = ('Ver dias da semana', 'Editar dia', 'Sair')
 
     while True:
         os.system('cls')
@@ -29,25 +29,32 @@ def main():
 def show_days():
     dia_num = 0
     dia = agenda.getDia(dia_num)
-    menu_itens = dia.getTarefas()
+    tarefas = dia.getTarefas()
+    menu_itens = ('[a] Dia anterior', '[p] Dia posterior', '[e] Editar farefas','    Enter para sair')
 
     while True:
         os.system('cls')
         ifc.cabecalho(dia.getNome())
         print()
-        ifc.lista(menu_itens, 1)
+        ifc.lista(tarefas, 1)
         print()
         ifc.line()
         print()
-        ifc.lista(('(a) Dia anterior', '(p) Dia posterior', 'Enter para sair'))
+        ifc.lista(menu_itens, 1)
 
-        op = input(': ')
+        op = input('\nOpção: ')
         if op == '':
             return
         elif op == 'a':
-            pass
+            if dia_num > 0: dia_num -= 1
+            else: dia_num = 6
+            dia = agenda.getDia(dia_num)
+            tarefas = dia.tarefas
         elif op == 'p':
-            pass
+            if dia_num < 6: dia_num += 1
+            else: dia_num = 0
+            dia = agenda.getDia(dia_num)
+            tarefas = dia.tarefas
 
 
 main()

@@ -1,6 +1,6 @@
 class Agenda:
     def __init__(self):
-        self.dias = (Dia('Domingo'), Dia('Segundo'), Dia('Terça'), Dia('Quarta'),
+        self.dias = (Dia('Domingo'), Dia('Segunda'), Dia('Terça'), Dia('Quarta'),
                      Dia('Quinta'), Dia('Sexta'), Dia('Sábado'))
     
 

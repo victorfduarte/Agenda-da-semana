@@ -7,13 +7,15 @@ def line():
 
 def cabecalho(texto: str):
     line()
+    print()
     print(texto.center(LINE_WIDTH))
+    print()
     line()
 
 
 def lista_num(itens: list, indent: int = 0):
     for n in range(1, len(itens)+1):
-        print(' '*indent + f'{n}-{itens[n-1]}')
+        print(' '*indent + f'[{n}] {itens[n-1]}')
 
 
 def lista(itens: list, indent: int = 0):
