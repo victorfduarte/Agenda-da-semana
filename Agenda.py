@@ -4,20 +4,20 @@ class Agenda:
                      Dia('Quinta'), Dia('Sexta'), Dia('Sábado'))
     
 
-    def getDia(self, dia):
+    def getDia(self, dia: int):
         return self.dias[dia]
 
 
 class Dia:
-    def __init__(self, nome):
+    def __init__(self, nome: str):
         self.nome = nome
         self.tarefas = []
     
     def getTarefas(self):
         return self.tarefas
     
-    def addTarefa(self, nome):
+    def addTarefa(self, nome: str):
         self.tarefas.append(nome)
     
-    def removeTarefa(self, index):
+    def removeTarefa(self, index: int):
         self.tarefa.pop(index)
