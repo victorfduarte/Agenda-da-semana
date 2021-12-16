@@ -28,5 +28,5 @@ class Dia:
     def addTarefa(self, nome: str):
         self.tarefas.append(nome)
     
-    def removeTarefa(self, index: int):
-        self.tarefa.pop(index)
+    def removeTarefa(self, nome: str):
+        self.tarefa.remove(nome)
