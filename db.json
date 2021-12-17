@@ -1,0 +1,36 @@
+[
+    {
+        "dia": "Segunda",
+        "tarefas": [
+            {
+                "titulo": "Acordar",
+                "horario": "06h30"
+            },
+            {
+                "titulo": "Ir à aula",
+                "horario": "07h30"
+            },
+            {
+                "titulo": "Voltar",
+                "horario": "11h30"
+            },
+            {
+                "titulo": "Almoçar",
+                "horario": "12h00"
+            }
+        ]
+    },
+    {
+        "dia": "Sábado",
+        "tarefas": [
+            {
+                "titulo": "Acordar",
+                "horario": "08h00"
+            },
+            {
+                "titulo": "Almoçar",
+                "horario": "12h00"
+            }
+        ]
+    }
+]

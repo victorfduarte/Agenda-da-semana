@@ -1,9 +1,11 @@
 import os
-import Agenda
-import interface as ifc
+import classes.Agenda as Agenda
+import classes.interface as ifc
 
 
-agenda = Agenda.Agenda()
+agenda = Agenda.Agenda("db.json")
+
+'''
 agenda.getDia(0).addTarefa('Acordar cedo')
 
 def main():
@@ -99,4 +101,4 @@ def remover_tarefa(dia):
     dia.removeTarefa(nome)
 
 main()
-        
+'''
