@@ -1,6 +1,6 @@
 import reader
-from classes.Dia import Dia
-from classes.Tarefa import Tarefa
+from Dia import Dia
+from Tarefa import Tarefa
 
 
 class Agenda:
@@ -16,13 +16,14 @@ class Agenda:
                 dia.add_tarefa(tarefa)
             
             self.__dias += (dia,)
-        
-        print(self.__dias)
-
     
 
-    def getDia(self, dia: int):
-        return self.dias[dia]
+    def getDia(self, dia: str) -> Dia:
+        for d in self.__dias:
+            if d.get_nome() == dia:
+                return d
+            else:
+                return Dia(dia)
     
     def getDias(self):
-        return self.dias
+        return self.__dias

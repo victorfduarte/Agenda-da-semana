@@ -1,4 +1,4 @@
-from classes.Tarefa import Tarefa
+from Tarefa import Tarefa
 
 
 class Dia:
@@ -8,7 +8,7 @@ class Dia:
 
     
     def get_nome(self):
-        return self.nome
+        return self.__nome
     
     def set_nome(self, nome: str):
         self.__nome = nome

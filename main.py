@@ -1,29 +1,51 @@
 import os
-import classes.Agenda as Agenda
-import classes.interface as ifc
+import Agenda as Agenda
+from Dia import Dia
+from Tarefa import Tarefa
+import Interface as ifc
+from datetime import datetime
 
 
 agenda = Agenda.Agenda("db.json")
 
-'''
-agenda.getDia(0).addTarefa('Acordar cedo')
+dias_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
+dia_num = datetime.today().weekday()
+hoje = dias_semana[dia_num]
+
+dia: Dia = agenda.getDia(hoje)
+tarefas: Tarefa = dia.get_tarefas()
+
 
 def main():
-    menu_itens = ('Ver dias da semana', 'Sair')
+    global dia, tarefas, dia_num, dias_semana
+
+    menu_itens = ('Dia anterior', 'Dia posterior', 'Editar tarefas')
 
     while True:
         os.system('cls')
-        ifc.cabecalho('Agenda')
-        print()
+        ifc.cabecalho(dia.get_nome())
+        ifc.space()
+        ifc.lista_tarefas(tarefas, 1)
+        ifc.space()
+        ifc.line()
+        ifc.space()
         ifc.lista_num(menu_itens, 1)
-        # print()
-        # ifc.line()
-        
-        op = int(input('\nEscolha uma opção: '))
+        ifc.space()
+
+        op = int(input('Opção: '))
         if op == 1:
-            show_days()
+            # Decrementa o dia da semana
+            if dia_num > 0: dia_num -= 1
+            else: dia_num = 6
+            dia = agenda.getDia(dias_semana[dia_num])
+            tarefas = dia.get_tarefas()
         elif op == 2:
-            exit()
+            if dia_num < 6: dia_num += 1
+            else: dia_num = 0
+            dia = agenda.getDia(dias_semana[dia_num])
+            tarefas = dia.get_tarefas()
+        elif op == 3:
+            edit_day(dia)
 
 
 def show_days():
@@ -101,4 +123,3 @@ def remover_tarefa(dia):
     dia.removeTarefa(nome)
 
 main()
-'''
