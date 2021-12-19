@@ -6,47 +6,73 @@ import Interface as ifc
 from datetime import datetime
 
 
-agenda = Agenda.Agenda("db.json")
+class AgendaSemana:
+    def __init__(self):
+        self.__dias_semana = ("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
 
-dias_semana = ("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
-dia_num = 6  # datetime.today().weekday() - 1
-# hoje = dias_semana[dia_num]
-
-dia: Dia = agenda.getDia(dia_num)
-tarefas: Tarefa = dia.get_tarefas()
-
-
-def main():
-    global dia, tarefas, dia_num, dias_semana
-
-    menu_itens = ('Dia anterior', 'Dia posterior', 'Editar tarefas')
-
-    while True:
-        os.system('cls')
-        ifc.cabecalho(dias_semana[dia.get_num()])
-        ifc.space()
-        ifc.lista_tarefas(tarefas, 1)
-        ifc.line()
-        ifc.space()
-        ifc.lista_num(menu_itens, 1)
-        ifc.space()
-
-        op = int(input('Opção: '))
-        if op == 1:
-            # Decrementa o dia da semana
-            if dia_num > 0: dia_num -= 1
-            else: dia_num = 6
-            dia = agenda.getDia(dia_num)
-            tarefas = dia.get_tarefas()
-        elif op == 2:
-            if dia_num < 6: dia_num += 1
-            else: dia_num = 0
-            dia = agenda.getDia(dia_num)
-            tarefas = dia.get_tarefas()
-        elif op == 3:
-            edit_day(dia)
+        self.__agenda = Agenda.Agenda("db.json")
+        self.__dia_num = 6  # datetime.today().weekday() - 1
+        self.__dia: Dia = self.__agenda.getDia(self.__dia_num)
 
 
+    def run(self):
+        menu_itens = ('Dia posterior', 'Dia anterior', 'Editar tarefas')
+
+        while True:
+            os.system('cls')
+            ifc.cabecalho(self.textDay())
+            ifc.space()
+            ifc.lista_tarefas(self.get_tarefa, 1)
+            ifc.line()
+            ifc.space()
+            ifc.lista_num(menu_itens, 1)
+            ifc.space()
+
+            op = int(input('Opção: '))
+            if op == 1:
+                # Decrementa o dia da semana
+                self.incDay()
+                self.updateDay()
+            elif op == 2:
+                # Incrementa o dia da semana
+                self.decDay()
+                self.updateDay()
+            elif op == 3:
+                # edit_day(dia)
+                pass
+    
+
+    def incDay(self):
+        '''Incrementa a variável que representa o dia em forma numérica'''
+        if self.__dia_num < 6:
+            self.__dia_num += 1
+        else:
+            self.__dia_num = 0
+
+
+    def decDay(self):
+        '''Decrementa a variável que representa o dia em forma numérica'''
+        if self.__dia_num > 0:
+            self.__dia_num -= 1
+        else:
+            self.__dia_num = 6
+    
+
+    def updateDay(self):
+        '''Atualiza o objeto que representa o dia'''
+        self.__dia = self.__agenda.getDia(self.__dia_num)
+    
+
+    def textDay(self) -> str:
+        '''Retorna a string que representa o dia atual'''
+        return self.__dias_semana[self.__dia_num]
+    
+
+    def get_tarefa(self):
+        for t in self.__dia.get_tarefas():
+            yield t
+
+'''
 def show_days():
     dia_num = 0
     dia = agenda.getDia(dia_num)
@@ -120,5 +146,7 @@ def remover_tarefa(dia):
     nome = input('Nome da tarefa: ')
 
     dia.removeTarefa(nome)
+'''
 
-main()
+agenda = AgendaSemana()
+agenda.run()
