@@ -4,7 +4,7 @@ from Tarefa import Tarefa
 
 
 class Agenda:
-    def __init__(self, base_file):
+    def __init__(self, base_file: str):
         self.__dias = ()
 
         base = reader.load(base_file)
@@ -18,12 +18,12 @@ class Agenda:
             self.__dias += (dia,)
     
 
-    def getDia(self, dia: str) -> Dia:
+    def getDia(self, dia: int) -> Dia:
         for d in self.__dias:
-            if d.get_nome() == dia:
+            if d.get_num() == dia:
                 return d
-            else:
-                return Dia(dia)
+        else:
+            return Dia(dia)
     
-    def getDias(self):
+    def getDias(self) -> tuple:
         return self.__dias

@@ -8,11 +8,11 @@ from datetime import datetime
 
 agenda = Agenda.Agenda("db.json")
 
-dias_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
-dia_num = datetime.today().weekday()
-hoje = dias_semana[dia_num]
+dias_semana = ("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
+dia_num = 6  # datetime.today().weekday() - 1
+# hoje = dias_semana[dia_num]
 
-dia: Dia = agenda.getDia(hoje)
+dia: Dia = agenda.getDia(dia_num)
 tarefas: Tarefa = dia.get_tarefas()
 
 
@@ -23,10 +23,9 @@ def main():
 
     while True:
         os.system('cls')
-        ifc.cabecalho(dia.get_nome())
+        ifc.cabecalho(dias_semana[dia.get_num()])
         ifc.space()
         ifc.lista_tarefas(tarefas, 1)
-        ifc.space()
         ifc.line()
         ifc.space()
         ifc.lista_num(menu_itens, 1)
@@ -37,12 +36,12 @@ def main():
             # Decrementa o dia da semana
             if dia_num > 0: dia_num -= 1
             else: dia_num = 6
-            dia = agenda.getDia(dias_semana[dia_num])
+            dia = agenda.getDia(dia_num)
             tarefas = dia.get_tarefas()
         elif op == 2:
             if dia_num < 6: dia_num += 1
             else: dia_num = 0
-            dia = agenda.getDia(dias_semana[dia_num])
+            dia = agenda.getDia(dia_num)
             tarefas = dia.get_tarefas()
         elif op == 3:
             edit_day(dia)

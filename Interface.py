@@ -33,3 +33,4 @@ def lista(itens: list, indent: int = 0):
 def lista_tarefas(itens: list, indent: int = 0):
     for item in itens:
         print(' '*indent + f'{item.get_horario()}  {item.get_titulo()}')
+        print()

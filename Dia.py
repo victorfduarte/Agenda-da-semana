@@ -2,18 +2,18 @@ from Tarefa import Tarefa
 
 
 class Dia:
-    def __init__(self, nome: str):
-        self.__nome = nome    # Nome do Dia
-        self.__tarefas = []   # Lista de objetos Tarefa
+    def __init__(self, num: int):
+        self.__num: int = num    # Número do Dia
+        self.__tarefas: list = []   # Lista de objetos Tarefa
 
     
-    def get_nome(self):
-        return self.__nome
+    def get_num(self) -> int:
+        return self.__num
     
-    def set_nome(self, nome: str):
-        self.__nome = nome
+    def set_num(self, num: int):
+        self.__num = num
 
-    def get_tarefas(self):
+    def get_tarefas(self) -> list:
         return self.__tarefas
     
     def add_tarefa(self, tarefa: Tarefa):
