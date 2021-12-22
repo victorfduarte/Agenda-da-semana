@@ -1,4 +1,5 @@
 import os
+import reader
 import Agenda as Agenda
 from Dia import Dia
 from Tarefa import Tarefa
@@ -10,9 +11,12 @@ class AgendaSemana:
     def __init__(self):
         self.__dias_semana = ("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
 
-        self.__agenda = Agenda.Agenda("db.json")
-        self.__dia_num = 6  # datetime.today().weekday() - 1
-        self.__dia: Dia = self.__agenda.getDia(self.__dia_num)
+        struct = reader.load("db.json")
+        self.__agenda = Agenda.Agenda(struct)
+
+        self.__dia_num = datetime.today().weekday()
+        self.incDay()
+        self.__dia_atual: Dia = self.__agenda.getDia(self.__dia_num)
 
 
     def run(self):
@@ -28,7 +32,11 @@ class AgendaSemana:
             ifc.lista_num(menu_itens, 1)
             ifc.space()
 
-            op = int(input('Opção: '))
+            op = input('Opção: ')
+            if not op:
+                continue
+
+            op = int(op)
             if op == 1:
                 # Decrementa o dia da semana
                 self.incDay()
@@ -38,8 +46,94 @@ class AgendaSemana:
                 self.decDay()
                 self.updateDay()
             elif op == 3:
-                # edit_day(dia)
-                pass
+                # Editar tarefas
+                self.telaEditarTarefas()
+    
+
+    def telaEditarTarefas(self):
+        menu_itens = ('Nova tarefa', 'Remover tarefa', 'Editar tarefa')
+
+        while True:
+            ifc.clear()
+            ifc.cabecalho(self.textDay())
+            ifc.space()
+            ifc.lista_tarefas(self.get_tarefa, 1)
+            ifc.line()
+            ifc.space()
+            ifc.lista_num(menu_itens, 1)
+            ifc.space()
+
+            op = input('Opção (Enter pra voltar): ')
+            if not op:
+                return
+
+            op = int(op)
+            if op == 1:
+                # Nova Tarefa
+                self.telaNovaTarefa()
+            elif op == 2:
+                # Remover Tarefa
+                self.telaImplementar("Tela de Remoção ainda não foi implementada\n\nEnter para voltar")
+            elif op == 3:
+                # Editar tarefa
+                self.telaImplementar("Tela de Edição ainda não foi implementada\n\nEnter para voltar")
+    
+
+    def telaNovaTarefa(self):
+        ifc.clear()
+        ifc.cabecalho(self.textDay())
+        ifc.space()
+
+        while True:
+            titulo = input(' '*4 + 'Titulo: ')
+            horario = input(' '*4 + 'Horario: ')
+            print()
+
+            print(' '*4 + 'Tem certeza de todas as informações?')
+            confirm = input(' '*4 + '(enter - sim, r - refazer, c - cancelar): ').lower()
+            
+            if confirm == '':
+                tarefa = Tarefa(titulo, horario)
+                self.addTarefa(tarefa)
+                return
+            elif confirm == 'r':
+                ifc.clear()
+                continue
+            elif confirm == 'c':
+                return
+
+
+
+    def telaImplementar(self, msg):
+        ifc.clear()
+        input(msg)
+    
+
+    def addTarefa(self, tarefa: Tarefa):
+        '''Adiciona uma tarefa à lista de tarefas do dia atual e atualiza a base de dados'''
+        self.__dia_atual.add_tarefa(tarefa)
+        
+        if self.__dia_atual not in self.__agenda.getDias():
+            self.__agenda.addDia(self.__dia_atual)
+
+        reader.store("db.json", self.convertStruct())
+    
+
+    def convertStruct(self) -> list:
+        dias = self.__agenda.getDias()
+        struct = []
+
+        for d in dias:
+            dia = {'dia': d.get_num(), 'tarefas': []}
+
+            for t in d.get_tarefas():
+                tarefa = {"titulo": t.get_titulo(), "horario": t.get_horario()}
+                dia["tarefas"].append(tarefa)
+
+            struct.append(dia)
+        
+        return struct
+
     
 
     def incDay(self):
@@ -59,8 +153,8 @@ class AgendaSemana:
     
 
     def updateDay(self):
-        '''Atualiza o objeto que representa o dia'''
-        self.__dia = self.__agenda.getDia(self.__dia_num)
+        '''Atualiza o objeto que representa o dia atual'''
+        self.__dia_atual = self.__agenda.getDia(self.__dia_num)
     
 
     def textDay(self) -> str:
@@ -69,7 +163,7 @@ class AgendaSemana:
     
 
     def get_tarefa(self):
-        for t in self.__dia.get_tarefas():
+        for t in self.__dia_atual.get_tarefas():
             yield t
 
 '''
@@ -150,3 +244,9 @@ def remover_tarefa(dia):
 
 agenda = AgendaSemana()
 agenda.run()
+
+
+'''
+print(agenda.convertStruct())
+print(agenda._AgendaSemana__agenda.getDias())
+'''

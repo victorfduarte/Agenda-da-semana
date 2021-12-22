@@ -1,5 +1,6 @@
 from typing import Generator, List
 from Tarefa import Tarefa
+import os
 
 
 LINE_WIDTH = 30
@@ -8,6 +9,10 @@ LINE_WIDTH = 30
 def line():
     '''Desenha uma linha com o símbolo ='''
     print('='*LINE_WIDTH)
+
+
+def clear():
+    os.system('cls')
 
 
 def cabecalho(texto: str):
